@@ -16,7 +16,7 @@
     Read the terms of the GNU General Public License
     at <http://www.gnu.org/licenses/>.
 
-    Copyright 2011-2015 Derek Hogue
+    Copyright 2016 Derek Hogue
 */
 
 include(PATH_THIRD.'/publish_notes/config.php');
