@@ -1,2 +1,1 @@
-# publish_notes.ee_addon
-Add highlighted notes to the ExpressionEngine® publish screen using custom fields and field instructions.
+**Publish Notes** is a fieldtype for ExpressionEngine&reg; 3 which allows you to add highlighted instructions or notes fields to the publish screen in one of the three standard alert styles, formatted for display using any available formatting plugin.
