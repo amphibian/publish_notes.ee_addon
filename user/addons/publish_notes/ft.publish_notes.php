@@ -28,17 +28,9 @@ class Publish_notes_ft extends EE_Fieldtype {
 		'version'	=> PUBLISH_NOTES_VERSION
 	);
 	
-	var $display_styles;
-
 	function __construct()
 	{
 		ee()->lang->loadfile('publish_notes');
-		
-		$this->display_styles = array(
-			'warn' => lang('warning'),
-			'issue' => lang('issue'),
-			'success' => lang('success')
-		);
 	}
 
 
@@ -52,25 +44,41 @@ class Publish_notes_ft extends EE_Fieldtype {
 	{	
 		ee()->load->model('addons_model');
 		$format_options = ee()->addons_model->get_plugin_formatting(TRUE);
-				
+		$display_styles = array(
+			'warn' => lang('warning'),
+			'issue' => lang('issue'),
+			'success' => lang('success')
+		);
+		
 		$settings = array(
 			'publish_notes' => array(
 				'label' => $this->info['name'],
 				'group' => 'publish_notes',
 				'settings' => array(
 					array(
+						'title' => 'show_heading',
+						'desc' => lang('show_heading_desc'),
+						'fields' => array(
+							'show_heading' => array(
+								'type' => 'yes_no',
+								'value' => (isset($data['show_heading'])) ? $data['show_heading'] : 'n'
+							)
+						)
+					),
+					array(
 						'title' => 'display_style',
-						'desc' => '',
+						'desc' => lang('display_style_desc'),
 						'fields' => array(
 							'display_style' => array(
 								'type' => 'select',
-								'choices' => $this->display_styles,
+								'choices' => $display_styles,
 								'value' => (isset($data['display_style'])) ? $data['display_style'] : 'warn'
 							)
 						)
 					),
 					array(
 						'title' => 'formatting',
+						'desc' => lang('formatting_desc'),
 						'fields' => array(
 							'formatting' => array(
 								'type' => 'select',
@@ -89,6 +97,7 @@ class Publish_notes_ft extends EE_Fieldtype {
 	function save_settings($data)
 	{
 		return array(
+			'show_heading' => ee('Request')->post('show_heading'),
 			'display_style' => ee('Request')->post('display_style'),
 			'formatting' => ee('Request')->post('formatting'),
 			'field_fmt' => 'none',
@@ -120,7 +129,13 @@ class Publish_notes_ft extends EE_Fieldtype {
 				'allow_img_url' => 'y'
 			)
 		);
-		$r = '<div class="publish-notes-field alert inline '.$this->settings['display_style'].'" style="display:none;">'.$notes.'</div>';
+		$r = '<div class="publish-notes-field alert inline '.$this->settings['display_style'].'" style="display:none;">';
+		if(!empty($this->settings['show_heading']) && $this->settings['show_heading'] == 'y')
+		{
+			$r .= '<h3>'.$this->settings['field_label'].'</h3>';
+		}
+		$r .= $notes;
+		$r .= '</div>';
 		
 		return $r;
 	}
