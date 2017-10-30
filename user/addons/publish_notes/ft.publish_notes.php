@@ -45,7 +45,7 @@ class Publish_notes_ft extends EE_Fieldtype {
 		ee()->load->model('addons_model');
 		$format_options = ee()->addons_model->get_plugin_formatting(TRUE);
 		$display_styles = array(
-			'warn' => lang('warning'),
+			'warn' => lang('warn'),
 			'issue' => lang('issue'),
 			'success' => lang('success')
 		);
@@ -114,8 +114,9 @@ class Publish_notes_ft extends EE_Fieldtype {
 
 	function display_field($data)
 	{
-		ee()->cp->load_package_css('publish');
-		ee()->cp->load_package_js('publish');
+		$file = (APP_VER >= 4) ? 'publish_v4' : 'publish_v3';
+		ee()->cp->load_package_css($file);
+		ee()->cp->load_package_js($file);
 		
 		ee()->load->library('typography');
 		ee()->typography->initialize();
