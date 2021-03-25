@@ -1,0 +1,8 @@
+.publish-notes-field { border-left: 0 !important; border-right: 0 !important; line-height: 16px; margin-left: 0 !important; margin-right: 0 !important; padding: 10px 20px 5px !important; }
+.publish-notes-field.plain { background: #e9f7fd; color: #000; }
+.publish-notes-field h2 {
+	background-color: transparent;
+    border-width: 0;
+    color: #000;
+    padding: 0;
+}
