@@ -2,5 +2,5 @@
 	
 	if( ! defined('PUBLISH_NOTES_VERSION') )
 	{
-		define('PUBLISH_NOTES_VERSION', '1.3.0');
+		define('PUBLISH_NOTES_VERSION', '1.3.1');
 	}

@@ -115,8 +115,12 @@ class Publish_notes_ft extends EE_Fieldtype {
 
 	function display_field($data)
 	{
-		ee()->cp->load_package_css('publish');
-		ee()->cp->load_package_js('publish');
+		if(!defined('PUBLISH_NOTES_ASSETS_LOADED'))
+		{
+			ee()->cp->load_package_css('publish');
+			ee()->cp->load_package_js('publish');
+			define('PUBLISH_NOTES_ASSETS_LOADED', 'y');
+		}
 		
 		ee()->load->library('typography');
 		ee()->typography->initialize();
