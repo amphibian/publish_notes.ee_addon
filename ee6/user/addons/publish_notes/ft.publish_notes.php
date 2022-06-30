@@ -23,6 +23,14 @@ include(PATH_THIRD.'/publish_notes/config.php');
 
 class Publish_notes_ft extends EE_Fieldtype {
 
+	public $default_settings = [
+        'show_heading' => '',
+		'display_style' => 'plain',
+		'formatting' => 'xhtml',
+         'field_hide_title' => true,
+        'field_hide_publish_layout_collapse' => true,
+    ];
+	
 	var $info = array(
 		'name'		=> 'Publish Notes',
 		'version'	=> PUBLISH_NOTES_VERSION
@@ -97,13 +105,8 @@ class Publish_notes_ft extends EE_Fieldtype {
 
 	function save_settings($data)
 	{
-		return array(
-			'show_heading' => ee('Request')->post('show_heading'),
-			'display_style' => ee('Request')->post('display_style'),
-			'formatting' => ee('Request')->post('formatting'),
-			'field_fmt' => 'none',
-			'field_show_fmt' => 'n',
-		);
+		$all = array_merge($this->default_settings, $data);
+        return array_intersect_key($all, $this->default_settings);
 	}
 
 
@@ -118,7 +121,6 @@ class Publish_notes_ft extends EE_Fieldtype {
 		if(!defined('PUBLISH_NOTES_ASSETS_LOADED'))
 		{
 			ee()->cp->load_package_css('publish');
-			ee()->cp->load_package_js('publish');
 			define('PUBLISH_NOTES_ASSETS_LOADED', 'y');
 		}
 		
@@ -135,7 +137,7 @@ class Publish_notes_ft extends EE_Fieldtype {
 			)
 		);
 		
-		$r = '<div class="publish-notes-field app-notice app-notice--inline app-notice---'.$this->settings['display_style'].'" style="display:none;"><div class="app-notice__content">';
+		$r = '<div class="publish-notes-field app-notice app-notice--inline app-notice---'.$this->settings['display_style'].'"><div class="app-notice__content">';
 		if(!empty($this->settings['show_heading']) && $this->settings['show_heading'] == 'y')
 		{
 			$r .= '<p class="alert__title">'.$this->settings['field_label'].'</p>';
